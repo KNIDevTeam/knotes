@@ -3,3 +3,4 @@ Członkowie projektu:
 - Ksawery Chodyniecki
 - Mieszko Mirgos
 - Przemysław Kacprzak
+- Karolina Romanowska
