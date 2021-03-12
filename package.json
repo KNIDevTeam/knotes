@@ -4,7 +4,9 @@
   "description": "Członkowie projektu: - Jan Szachno - Ksawery Chodyniecki - Mieszko Mirgos",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index",
+    "dev": "nodemon index"
   },
   "repository": {
     "type": "git",
@@ -15,5 +17,11 @@
   "bugs": {
     "url": "https://github.com/KNIDevTeam/knotes/issues"
   },
-  "homepage": "https://github.com/KNIDevTeam/knotes#readme"
+  "homepage": "https://github.com/KNIDevTeam/knotes#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.7"
+  }
 }
