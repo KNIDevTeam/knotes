@@ -1,19 +1,18 @@
 {
-  "name": "knotes",
+  "name": "projekt",
   "version": "1.0.0",
-  "description": "Członkowie projektu: - Jan Szachno - Ksawery Chodyniecki - Mieszko Mirgos",
-  "main": "index.js",
+  "description": "",
+  "main": "app.js",
+  "dependencies": {
+    "ejs": "^3.1.6",
+    "express": "^4.17.1",
+    "morgan": "^1.10.0",
+    "nodemon": "^2.0.7"
+  },
+  "devDependencies": {},
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/KNIDevTeam/knotes.git"
-  },
-  "author": "KNI",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/KNIDevTeam/knotes/issues"
-  },
-  "homepage": "https://github.com/KNIDevTeam/knotes#readme"
+  "author": "",
+  "license": "ISC"
 }
