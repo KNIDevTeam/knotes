@@ -2,8 +2,10 @@ const express = require('express')
 
 const app = express()
 
-app.get('/', (req, res) => {
-  return res.send("Hello World")
+app.use(express.static('public'))
+
+app.get('/test', (req, res) => {
+  return res.send("testowa ścieżka")
 })
 
 const PORT = process.env.PORT || 8080
