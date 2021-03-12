@@ -4,3 +4,4 @@ Członkowie projektu:
 - Mieszko Mirgos
 - Przemysław Kacprzak
 - Karolina Romanowska
+- Jakub Michalski
