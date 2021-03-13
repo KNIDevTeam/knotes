@@ -1,5 +1,5 @@
 const express = require('express')
-const fs = require('fs')
+
 const app = express()
  
 app.use(express.static('public'))
@@ -31,51 +31,6 @@ class List {
   getContentFromUrl = (URL)=>{
     return this.content[urlList.url.indexOf(URL)];
   }
-  save = (URL)=>{
-    let dataJSONED = {url: URL, title: this.getTitleFromUrl(URL), content: this.getContentFromUrl(URL)};
-    try{
-      fs.writeFileSync("./data"+URL, JSON.stringify(dataJSONED))
-    }catch(err){
-      console.err(err);
-    }
-  }
-  read = (URL)=>{
-    try {
-      return fs.readFileSync("./data"+URL, 'utf8')
-    } catch (err) {
-      console.error(err)
-      return false
-    }
-  }
-  load =(URL)=>{
-    let data="", decoded={};
-    data=urlList.read(URL);
-
-    if(typeof(data)=="boolean"){
-      console.err("Error reading data!")
-      return;
-    }else{
-      decoded = JSON.parse(data);
-    }
-    if(this.checkIfAdded(URL)){
-      this.title[urlList.url.indexOf(URL)]=decoded.title;
-      this.content[urlList.url.indexOf(URL)]=decoded.content;
-    }else{
-      this.addElement(decoded.url, decoded.title, decoded.content)
-    }
-  }
-}
-
-checkIfExists = (URLpath) => {
-  try {
-    if (fs.existsSync("./data"+URLpath)) {
-      return true
-    }
-  } catch(err) {
-    console.error(err)
-    return false
-  }
-  
 }
 
 let urlList = new List;
@@ -94,7 +49,6 @@ app.post('/notes', (req,res)=>{
     req.body.title,
     req.body.content
   )
-  urlList.save(req.body.oldUrl);
   return res.render('notes', {array: urlList})
 })
 app.get('/notes',(req,res)=>{
@@ -102,12 +56,7 @@ app.get('/notes',(req,res)=>{
 })
 app.use((req,res) => {
   if(urlList.checkIfAdded(req.url)==false){
-    if(checkIfExists(req.url)) {
-      urlList.load(req.url);
-      return res.render('Written', {url: req.url, title: urlList.getTitleFromUrl(req.url), content: urlList.getContentFromUrl(req.url)});
-    }else{
-      return res.render('nonWriten', {url: req.url});
-    }
+    return res.render('nonWriten', {url: req.url});
   }else{
     return res.render('Written', {url: req.url, title: urlList.getTitleFromUrl(req.url), content: urlList.getContentFromUrl(req.url)});
   }
