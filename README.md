@@ -1,11 +1,5 @@
 # KNotes
-
-## Członkowie projektu:
-- Jan Szachno
-- Ksawery Chodyniecki
-- Mieszko Mirgos
-- Przemysław Kacprzak
-- Karolina Romanowska
+Pierwsza wersja typu na szybko bez zapisu notatek do plików :)
 
 ## Uruchomienie projektu:
 
@@ -25,3 +19,4 @@ npm run dev
 ```
 
 Jeżeli instalacja przebiegła pomyślnie, po przejściu w przeglądarce na adres `http://localhost:8080` powinniśmy zobaczyć stronę startową projektu
+
