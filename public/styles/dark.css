@@ -7,3 +7,31 @@ a {
     color: #0080F0;
     text-decoration: none;
 }
+input {
+    color: #F0F0F0;
+    background-color: #404040;
+    border: 2px;
+    border-radius: 2px;
+}
+textarea {
+    color: #F0F0F0;
+    background-color: #404040;
+    border: 2px;
+    border-radius: 2px;
+}
+button {
+    color: #F0F0F0;
+    background-color: #0080F0;
+    font-size: 14px;
+    padding: 8px;
+    border: 0;
+    border-radius: 4px;
+    box-shadow: 0 3px #555;
+}
+button:hover {
+    background-color: #004080;
+}
+button:active {
+    box-shadow: 0 0 #333;
+    transform: translateY(3px);
+}
