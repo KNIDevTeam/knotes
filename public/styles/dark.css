@@ -7,13 +7,7 @@ a {
     color: #0080F0;
     text-decoration: none;
 }
-input {
-    color: #F0F0F0;
-    background-color: #404040;
-    border: 2px;
-    border-radius: 2px;
-}
-textarea {
+input, textarea {
     color: #F0F0F0;
     background-color: #404040;
     border: 2px;
@@ -34,4 +28,7 @@ button:hover {
 button:active {
     box-shadow: 0 0 #333;
     transform: translateY(3px);
+}
+button a {
+    color: #F0F0F0;
 }
