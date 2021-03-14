@@ -1,7 +1,8 @@
 const express = require('express')
+const fs = require('fs')
 
 const app = express()
- 
+
 app.use(express.static('public'))
 app.use(express.urlencoded({extended: true}))
 
@@ -49,6 +50,12 @@ app.post('/notes', (req,res)=>{
     req.body.title,
     req.body.content
   )
+  // creates dir notes if it does not exist and then saves the note as json
+  if (!fs.existsSync('./notes')) { fs.mkdirSync('./notes'); }
+  let json = JSON.stringify({'url': req.body.oldUrl, 'title': req.body.title, 'content': req.body.content})
+  fs.writeFile('./notes/'+req.body.title+'.json', json, function(err) {
+      if (err) console.error(err);
+  });
   return res.render('notes', {array: urlList})
 })
 app.get('/notes',(req,res)=>{
