@@ -3,4 +3,7 @@ body {
     background-color: #202020;
     font-family: Helvetica, sans-serif;
 }
-a { color: #0080F0; }
+a {
+    color: #0080F0;
+    text-decoration: none;
+}
