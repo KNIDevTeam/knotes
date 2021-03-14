@@ -15,6 +15,7 @@ class List {
     this.url=[];
     this.title=[];
     this.content=[];
+    
   }
   addElement = (URL,TITLE, CONTENT)=>{
     this.url.push(URL);
@@ -64,6 +65,12 @@ class List {
       this.addElement(decoded.url, decoded.title, decoded.content)
     }
   }
+  populate = ()=>{
+    //populates list with existing notes
+    fs.readdirSync("./data/").forEach(file =>{
+      this.load("/"+file);
+    })
+  }
 }
 
 checkIfExists = (URLpath) => {
@@ -79,6 +86,7 @@ checkIfExists = (URLpath) => {
 }
 
 let urlList = new List;
+urlList.populate();
 
 app.get('/test', (req, res) => {
   return res.send("testowa ścieżka")
