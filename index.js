@@ -73,17 +73,6 @@ class List {
   }
 }
 
-checkIfExists = (URLpath) => {
-  try {
-    if (fs.existsSync("./data"+URLpath)) {
-      return true
-    }
-  } catch(err) {
-    console.error(err)
-    return false
-  }
-  
-}
 
 let urlList = new List;
 urlList.populate();
@@ -105,20 +94,28 @@ app.post('/notes', (req,res)=>{
   urlList.save(req.body.oldUrl);
   return res.render('notes', {array: urlList})
 })
+
+app.post('/update', (req,res)=>{
+  var tmp=req.body.oldUrl;
+  var index = urlList.url.indexOf(tmp);
+  urlList.title[index]=req.body.title;
+  urlList.content[index]=req.body.content;
+  urlList.save(tmp);
+  res.redirect('/notes')
+})
+
 app.get('/notes',(req,res)=>{
   return res.render('notes', {array: urlList})
 })
+
+
 app.use((req,res) => {
-  if(urlList.checkIfAdded(req.url)==false){
-    if(checkIfExists(req.url)) {
-      urlList.load(req.url);
-      return res.render('Written', {url: req.url, title: urlList.getTitleFromUrl(req.url), content: urlList.getContentFromUrl(req.url)});
-    }else{
-      return res.render('nonWriten', {url: req.url});
-    }
+  if(!urlList.checkIfAdded(req.url)){
+    return res.render('nonWriten', {url: req.url});
   }else{
     return res.render('Written', {url: req.url, title: urlList.getTitleFromUrl(req.url), content: urlList.getContentFromUrl(req.url)});
   }
+  
 })
 
 

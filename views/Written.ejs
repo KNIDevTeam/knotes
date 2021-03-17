@@ -6,8 +6,14 @@
     <title>Document</title>
 </head>
 <body>
-    <p>witaj na stronie <%=url%></p>
-    <h1>tytuł notatki: <%=title%></h1>
-    <h3><%=content%></h3>
+    <p>witaj na stronie <%= url %> </p>
+    <form action="/update" method="POST">
+        <label for="title">tytuł:</label>
+        <input type="text" id="title" name="title" value="<%=title%>"  required>
+        <label for="body">Notatka</label>
+        <textarea name="content" id="content" cols="30" rows="10"><%=content%></textarea>
+        <input type="text" value="<%=url%>" id="oldUrl" name="oldUrl" hidden>
+        <button>zapisz</button>
+      </form>
 </body>
 </html>
