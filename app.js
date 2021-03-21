@@ -18,9 +18,6 @@ app.use(express.urlencoded({ extended:true }));
 //Morgan
 app.use(morgan('dev'));
 
-//Listen to requests on port 3000
-app.listen(3000);
-
 //Render index page
 app.get('/', (req, res) => {
     res.render('index', { title: "Strona główna" });
@@ -35,3 +32,6 @@ app.use((req, res) => {
     res.render('404', { title: "Nie znaleziono!" });
 });
 
+//Listen to requests on port 8080
+const PORT = process.env.PORT || 8080
+app.listen(PORT, () => console.log(`Server started on port ${PORT}`))

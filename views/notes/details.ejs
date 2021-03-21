@@ -9,8 +9,13 @@
     <%- include("../partials/nav.ejs") %>
 
     <div>
-        <h1><%= name %></h1>
-        <p><%= body %></p>
+        <form action="/notes/update" method="POST">
+            <label for="title">tytuł:</label><b><%= name %></b> <br>
+            <textarea name="content" id="content" cols="30" rows="10"><%= body %></textarea>
+            <input type="text" value="<%=name%>" id="oldUrl" name="oldUrl" hidden>
+            <br>
+            <button class="update" id="<%= name %>">Zapisz</button>
+          </form>
         <br>
         <button class="delete" id="<%= name %>">Usuń</button>
         <br>
@@ -27,6 +32,15 @@
             .then(data => window.location.href = data.redirect)
             .catch(err => console.log(err));
         });
+
+        const update = document.querySelector('button.update');
+
+        update.addEventListener('click', () => {
+            fetch(`${update.id}`, { method: 'POST' })
+            .then(res => res.json())
+            .then(data => window.location.href = data.redirect)
+            .catch(err => console.log(err));
+        })
     </script>
 
 </body>

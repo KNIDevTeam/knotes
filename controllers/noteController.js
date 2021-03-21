@@ -36,10 +36,15 @@ const note_delete = (req, res) => {
     res.json({ redirect: '/notes' });
 };
 
+const note_update = (req, res) => {
+    const path = './public/notes/' + req.body.name + '.txt';
+}
+
 module.exports = {
     note_get, 
     note_details, 
     note_create_get, 
     note_create_post,
-    note_delete
+    note_delete,
+    note_update
 };
