@@ -1,5 +1,6 @@
 const express = require('express');
 const morgan = require('morgan');
+const bodyParser = require('body-parser')
 
 const noteRoutes = require('./routes/noteRoutes');
 
@@ -11,6 +12,8 @@ app.set('view engine', 'ejs');
 
 //Set static files path
 app.use(express.static('public'));
+
+
 
 //Set extended url encoding
 app.use(express.urlencoded({ extended:true }));

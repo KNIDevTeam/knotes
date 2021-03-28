@@ -10,7 +10,7 @@
 
     <div>
         <form action="/notes/update" method="POST">
-            <label for="title">tytuł:</label><b><%= name %></b> <br>
+            <label id="name-label" for="title" data-title="<%= name %>">tytuł:</label><b><%= name %></b> <br>
             <textarea name="content" id="content" cols="30" rows="10"><%= body %></textarea>
             <input type="text" value="<%=name%>" id="oldUrl" name="oldUrl" hidden>
             <br>
@@ -33,14 +33,17 @@
             .catch(err => console.log(err));
         });
 
-        const update = document.querySelector('button.update');
+        // const update = document.querySelector('button.update');
 
-        update.addEventListener('click', () => {
-            fetch(`${update.id}`, { method: 'POST' })
-            .then(res => res.json())
-            .then(data => window.location.href = data.redirect)
-            .catch(err => console.log(err));
-        })
+        // update.addEventListener('click', () => {
+        //     const textarea = document.getElementById('content')
+        //     const content = textarea.innerText
+        //     const filename = document.getElementById('name-label').dataset.title
+        //     fetch(`update`, { method: 'POST', body: JSON.stringify({ filename, content }) })
+        //     .then(res => res.json())
+        //     .then(data => window.location.href = data.redirect)
+        //     .catch(err => console.log(err));
+        // })
     </script>
 
 </body>

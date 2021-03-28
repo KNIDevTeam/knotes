@@ -1,3 +1,4 @@
+const json = require('body-parser/lib/types/json');
 const fs = require('fs');
 
 const note_get = (req, res) => {
@@ -37,7 +38,13 @@ const note_delete = (req, res) => {
 };
 
 const note_update = (req, res) => {
-    const path = './public/notes/' + req.body.name + '.txt';
+    console.log(req.body)
+    const path = './public/notes/' + req.body.oldUrl + '.txt';
+    // console.log(typeof body.content)
+    // console.log(body.filename)
+    // console.log(body.content)
+    fs.writeFileSync(path, req.body.content)
+    res.redirect('/notes')
 }
 
 module.exports = {
