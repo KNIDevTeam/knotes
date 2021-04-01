@@ -3,13 +3,23 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><%=title%></title>
+    <title>Nowa notatka</title>
     <link rel="stylesheet" href="styles/dark.css" type="text/css">
 </head>
 <body>
-    <p>witaj na stronie <%=url%></p>
-    <h1>tytuł notatki: <%=title%></h1>
-    <h3><%=content%></h3>
-    <a href="../"><button>Wróć</button></a>
+    <p>witaj na stronie <%= url %> </p>
+    <p>strona jest obecnie pusta</p>
+    <p>wpisz coś poniżej i kliknij zapisz</p>
+    <form action="/notes" method="POST">
+        <label for="title">tytuł:</label>
+        <input type="text" id="title" name="title" value="<%=title%>" required>
+        <br>
+        <textarea name="content" id="content" cols="30" rows="10">
+            <%=content%>
+        </textarea>
+        <input type="text" value="<%=url%>" id="oldUrl" name="oldUrl" hidden>
+        <br>
+        <button>Zapisz</button>
+    </form>
 </body>
 </html>

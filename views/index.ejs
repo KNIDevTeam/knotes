@@ -1,18 +1,13 @@
-<html lang="pl">
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Strona główna</title>
-  <link rel="stylesheet" href="styles/dark.css" type="text/css">
-</head>
+<!DOCTYPE html>
+<html>
+    <%- include('./partials/head') %>
 <body>
-  <h1>Testowa strona główna</h1>
-  <h3>szybka instrukcja obsługi</h3>
-  <p>jeśli po ukośniku umieścisz jakieś znaki to przeniesie cię na nową strone gdzie będziesz mógł zapisać nową notatkę</p>
-  <p>jeśli pod tą stroną istnieje już notatka to przeniesie cię do niej</p>
-  <p>pod /notes (link masz pod spodem) znajdziesz wszystkie zapisane już notatki</p>
-  <p>wszystkie notatki znikają po resecie serwera bo nie zapisują się w plikach tylko w tabeli póki co</p>
-  <h3><a href="/notes">link do notesów</a></h3>
+
+    <%- include('./partials/nav') %>
+
+    <h1>Witaj na stronie projektu!</h1>
+
+    <%- include('./partials/footer') %>
+
 </body>
 </html>

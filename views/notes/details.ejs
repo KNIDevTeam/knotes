@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<%- include("../partials/head.ejs") %>
+
+<body>
+    
+
+    <%- include("../partials/nav.ejs") %>
+
+    <div>
+        <form action="/notes/update" method="POST">
+            <label id="name-label" for="title" data-title="<%= name %>">tytuł:</label><b><%= name %></b> <br>
+            <textarea name="content" id="content" cols="30" rows="10"><%= body %></textarea>
+            <input type="text" value="<%=name%>" id="oldUrl" name="oldUrl" hidden>
+            <br>
+            <button class="update" id="<%= name %>">Zapisz</button>
+          </form>
+        <br>
+        <button class="delete" id="<%= name %>">Usuń</button>
+        <br>
+    </div>
+
+    <%- include("../partials/footer.ejs") %>
+
+    <script>
+        const trash = document.querySelector('button.delete');
+
+        trash.addEventListener('click', () => {
+            fetch(`${trash.id}`, { method: 'DELETE' })
+            .then(res => res.json())
+            .then(data => window.location.href = data.redirect)
+            .catch(err => console.log(err));
+        });
+
+        // const update = document.querySelector('button.update');
+
+        // update.addEventListener('click', () => {
+        //     const textarea = document.getElementById('content')
+        //     const content = textarea.innerText
+        //     const filename = document.getElementById('name-label').dataset.title
+        //     fetch(`update`, { method: 'POST', body: JSON.stringify({ filename, content }) })
+        //     .then(res => res.json())
+        //     .then(data => window.location.href = data.redirect)
+        //     .catch(err => console.log(err));
+        // })
+    </script>
+
+</body>
+</html>
