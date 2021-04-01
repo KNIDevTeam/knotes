@@ -2,21 +2,28 @@ const express = require('express');
 const morgan = require('morgan');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
+const fs = require('fs');
 
 //Init express app
 const app = express();
 
-/**
- * server_user
-3RLERrSHizqJXks0
- */
+const cfgfile = fs.readFile('./config.json', 'utf8', (err,data)=>{
+    if(err){
+        console.log('error while reading data from config: ${err} ');
+    }else{
+        //console.log(data);
+        const creds = JSON.parse(data);
+        const user = creds.user;
+        const password = creds.password;
+        //console.log(`mongodb+srv://${user}:${password}@knotes.xks1n.mongodb.net/knotes?retryWrites=true&w=majority`);
 
-const dbURI = 'mongodb+srv://server_user:3RLERrSHizqJXks0@knotes.xks1n.mongodb.net/knotes?retryWrites=true&w=majority';
-
-//connect to db
-mongoose.connect(dbURI, {useNewUrlParser: true, useUnifiedTopology: true})
-.then((result )=>{console.log("Connection established"); app.listen(8080);})
-.catch((err )=>console.log(err));
+        const dbURI = `mongodb+srv://${user}:${password}@knotes.xks1n.mongodb.net/knotes?retryWrites=true&w=majority`;
+        //connect to db
+        mongoose.connect(dbURI, {useNewUrlParser: true, useUnifiedTopology: true})
+        .then((result )=>{console.log("Connection established"); app.listen(8080);})
+        .catch((err )=>console.log(err));
+    }
+});
 
 const noteRoutes = require('./routes/noteRoutes');
 

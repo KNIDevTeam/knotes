@@ -120,3 +120,6 @@ dist
 
 # Ignore generated notes
 notes/
+
+#own
+config.json
