@@ -89,8 +89,6 @@
 //     return false
 //   }
 
-// }
-
 // let urlList = new List;
 // urlList.populate();
 
@@ -102,6 +100,38 @@
 //   return res.render('index', { title: "title" });
 // })
 
+// app.post('/notes', (req,res)=>{
+//   urlList.addElement(
+//     req.body.oldUrl,
+//     req.body.title,
+//     req.body.content
+//   )
+//   urlList.save(req.body.oldUrl);
+//   return res.render('notes', {array: urlList})
+// })
+
+// app.post('/update', (req,res)=>{
+//   var tmp=req.body.oldUrl;
+//   var index = urlList.url.indexOf(tmp);
+//   urlList.title[index]=req.body.title;
+//   urlList.content[index]=req.body.content;
+//   urlList.save(tmp);
+//   res.redirect('/notes')
+// })
+
+// app.get('/notes',(req,res)=>{
+//   return res.render('notes', {array: urlList})
+// })
+
+
+// app.use((req,res) => {
+//   if(!urlList.checkIfAdded(req.url)){
+//     return res.render('nonWriten', {url: req.url});
+//   }else{
+//     return res.render('Written', {url: req.url, title: urlList.getTitleFromUrl(req.url), content: urlList.getContentFromUrl(req.url)});
+//   }
+  
+// })
 // app.post('/notes', (req,res)=>{
 //   urlList.addElement(
 //     req.body.oldUrl,
