@@ -1,7 +1,6 @@
 body {
     color: #F0F0F0;
     background-color: #202020;
-    font-family: Helvetica, sans-serif;
 }
 a {
     color: #0080F0;
@@ -12,6 +11,9 @@ input, textarea {
     background-color: #404040;
     border: 2px;
     border-radius: 2px;
+}
+nav a:hover {
+    background-color: #404040;
 }
 button {
     color: #F0F0F0;
@@ -31,4 +33,10 @@ button:active {
 }
 button a {
     color: #F0F0F0;
+}
+#navy_wrap { background-color: #101010; }
+#content_wrap { background-color: #202020; }
+#footer_wrap {
+	color: #909090;
+	background-color: #101010;
 }
