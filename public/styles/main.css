@@ -1,0 +1,29 @@
+body {
+    font-family: Helvetica, sans-serif;
+    margin: 0px 0 0 0;
+}
+
+div { margin: 0px 0 0 0; }
+
+p { display: block; }
+
+nav { overflow: hidden; }
+
+nav a {
+    float: left;
+    padding: 12px 12px;
+}
+
+.outer { width: 100%; }
+
+.inner {
+    max-width: 640px;
+    margin: auto;
+    padding: 10px;
+}
+
+#footer_wrap {
+    position: absolute;
+    bottom: 0;
+	font-size: 0.8em;
+}
