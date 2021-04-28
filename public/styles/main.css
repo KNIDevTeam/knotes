@@ -1,11 +1,19 @@
 body {
     font-family: Helvetica, sans-serif;
+    font-family: Roboto Mono, monospace;
     margin: 0px 0 0 0;
+    color: var(--text);
+    background-color: var(--background);
 }
 
 div { margin: 0px 0 0 0; }
 
 p { display: block; }
+
+a {
+    color: var(--accent);
+    text-decoration: none;
+}
 
 nav { overflow: hidden; }
 
@@ -14,29 +22,64 @@ nav a {
     padding: 12px 12px;
 }
 
+nav a:hover {
+    background-color: var(--light_background);
+}
+
+input, textarea {
+    color: var(--text);
+    background-color: var(--light_background);
+    border: 2px;
+    border-radius: 2px;
+}
+
+button {
+    color: var(--text);
+    background-color: var(--accent);
+    font-size: 14px;
+    padding: 8px;
+    border: 0;
+    border-radius: 4px;
+    box-shadow: 0 3px var(--light_background);
+}
+
+button:hover { background-color: var(--dark_accent); }
+
+button:active {
+    box-shadow: 0 0 var(--background);
+    transform: translateY(3px);
+}
+
+button a { color: var(--text); }
+
 .outer { width: 100%; }
 
 .inner {
-    max-width: 640px;
+    display: block;
+    margin: auto;
+    text-align: center;
+    width: max(640px, 80%);
     padding: 10px;
 }
 
-.main {
-    text-align:center;
-    font-family: 'Roboto Mono', monospace;
-    max-width: 640px;
-    margin: auto;
-    padding: 200px;
-}
+#navy_wrap { background-color: var(--dark_background); }
+
+#content_wrap { background-color: var(--background); }
+
 #footer_wrap {
     position: absolute;
     bottom: 0;
 	font-size: 0.8em;
+	color: var(--light_text);
+	background-color: var(--dark_background);
 }
 
 #functionality {
-    float:left;
-    width: 33%;
-    text-align:center;
-    font-family: 'Roboto Mono', monospace;
+    float: left;
+    width: calc(100%/3);
+}
+
+#functionality img {
+    width: 256px;
+    filter: hue-rotate(var(--hue));
 }
