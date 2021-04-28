@@ -1,5 +1,4 @@
 :root {
-    --hue: 0deg;
 	--text: #F0F0F0;
 	--light_text: #909090;
 	--dark_accent: hsl(calc(210deg + var(--hue)), 100%, 25%);

@@ -26,6 +26,10 @@ nav a:hover {
     background-color: var(--light_background);
 }
 
+li {
+    list-style-type: none;
+}
+
 input, textarea {
     color: var(--text);
     background-color: var(--light_background);
