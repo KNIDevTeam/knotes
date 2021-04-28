@@ -62,6 +62,16 @@ button a { color: var(--text); }
     padding: 10px;
 }
 
+.create-note {
+    display: inline-block;
+    box-sizing: border-box;
+    padding: 30px 25px;
+    background-color: var(--light_text);
+    border-radius: 40px;
+    margin: 40px 0;
+}
+
+
 #navy_wrap { background-color: var(--dark_background); }
 
 #content_wrap { background-color: var(--background); }
@@ -82,4 +92,14 @@ button a { color: var(--text); }
 #functionality img {
     width: 256px;
     filter: hue-rotate(var(--hue));
+}
+
+#title {
+        border: none;
+        outline: none;
+        height: 30px;
+        border-radius: 25px;
+        width: 220px;
+        box-sizing: border-box;
+        padding: 0 18px;
 }
