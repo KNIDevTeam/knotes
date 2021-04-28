@@ -107,3 +107,15 @@ button a { color: var(--text); }
         box-sizing: border-box;
         padding: 0 18px;
 }
+
+ul li {
+    border: 1px  solid #FFFFFF;
+    margin: 10px;
+    padding: 10px 20px;
+    display: flex;
+    align-items: center;
+}
+
+ul li img {
+    width: 64px;
+}
