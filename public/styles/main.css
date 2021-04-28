@@ -100,3 +100,15 @@ button a { color: var(--text); }
     width: 256px;
     filter: hue-rotate(var(--hue));
 }
+
+ul li {
+    border: 1px solid #FFFFFF;
+    margin: 10px;
+    padding: 10px 20px;
+    display: flex;
+    align-items: center;
+}
+
+ul li img {
+    width: 64px;
+}
