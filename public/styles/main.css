@@ -18,12 +18,25 @@ nav a {
 
 .inner {
     max-width: 640px;
-    margin: auto;
     padding: 10px;
 }
 
+.main {
+    text-align:center;
+    font-family: 'Roboto Mono', monospace;
+    max-width: 640px;
+    margin: auto;
+    padding: 200px;
+}
 #footer_wrap {
     position: absolute;
     bottom: 0;
 	font-size: 0.8em;
+}
+
+#functionality {
+    float:left;
+    width: 33%;
+    text-align:center;
+    font-family: 'Roboto Mono', monospace;
 }
