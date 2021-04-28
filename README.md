@@ -1,5 +1,5 @@
 # KNotes
-Pierwsza wersja typu na szybko bez zapisu notatek do plików :)
+Strona internetowa pozwalając na tworzenie oraz edycję notatek. Aktualnie pracujemy nad stworzeniem bazy danych, w przyszłości będzie to wygodne przeglądarkowe środowisko do tworzenia, współpracy oraz przechowywania kodu.
 
 ## Uruchomienie projektu:
 
