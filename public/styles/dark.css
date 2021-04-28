@@ -3,6 +3,7 @@
 	--light_text: #909090;
 	--dark_accent: hsl(calc(210deg + var(--hue)), 100%, 25%);
 	--accent: hsl(calc(210deg + var(--hue)), 100%, 50%);
+	--light_accent: hsl(calc(210deg + var(--hue)), 100%, 75%);
 	--dark_background: #101010;
 	--background: #202020;
 	--light_background: #404040;
