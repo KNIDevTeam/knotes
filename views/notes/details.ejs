@@ -5,14 +5,13 @@
     <%- include("../partials/nav.ejs") %>
     <div class="outer" id="content_wrap">
         <section class="inner">
-            <form action="/notes/update" method="POST">
-                <label id="name-label" for="title" data-title="<%= name %>">tytuł:</label><b><%= name %></b> <br>
+            <form class="create-note" action="/notes/update" method="POST">
+                <label id="name-label" for="title" data-title="<%= name %>">Tytuł: </label><b><%= name %></b> <br>
                 <textarea name="content" id="content" cols="30" rows="10"><%= body %></textarea>
                 <input type="text" value="<%=name%>" id="oldUrl" name="oldUrl" hidden>
-                <br>
-                <button class="update" id="<%= name %>">Zapisz</button>
                 </form>
             <br>
+            <button class="update" id="<%= name %>">Zapisz</button>
             <button class="delete" id="<%= name %>">Usuń</button>
             <br>
         </section>

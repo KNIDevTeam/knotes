@@ -1,6 +1,6 @@
 body {
     font-family: Helvetica, sans-serif;
-    font-family: Roboto Mono, monospace;
+    font-family: Roboto, monospace;
     margin: 0px 0 0 0;
     color: var(--text);
     background-color: var(--background);
@@ -31,6 +31,7 @@ li {
 }
 
 input, textarea {
+    font-family: Roboto, monospace;
     color: var(--text);
     background-color: var(--light_background);
     border: none;
