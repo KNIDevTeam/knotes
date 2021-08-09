@@ -1,0 +1,17 @@
+version: '3'
+services:
+  node:
+    restart: always
+    build: .
+    ports:
+      - 8080:8080
+    environment:
+      - KNOTES_MONGO_URL=mongodb://mongo:27017/knotes?retryWrites=true&w=majority
+  mongo:
+    image: mongo
+    ports:
+      - 27017:27017
+    volumes:q
+      - mongodb:/data/db
+volumes:
+ mongodb:
