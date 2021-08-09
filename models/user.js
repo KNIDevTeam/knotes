@@ -10,9 +10,15 @@ const userSchema = new Schema({
         type: String,
         required: true
     },
-    //zrobić listę obiektów postaci {note_id(niew weim jaki typ), allow_write(bool)}
+    readperm: {
+        type: String
+    },
+    writeperm:{
+        type: String
+    },
+    
 }, {timestamps: true})
 
-const Note  = mongoose.model('users', userSchema);
+const User  = mongoose.model('users', userSchema);
 
 module.exports = User;

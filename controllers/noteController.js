@@ -83,6 +83,8 @@ const note_update = (req, res) => {
     res.redirect('/notes')
 }
 
+
+
 module.exports = {
     note_get, 
     note_details, 
