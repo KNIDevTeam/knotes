@@ -2,7 +2,9 @@ version: '3'
 services:
   node:
     restart: always
-    build: .
+    build:
+      context: ../
+      dockerfile: ./docker/Dockerfile
     ports:
       - 8080:8080
     environment:
@@ -11,7 +13,7 @@ services:
     image: mongo
     ports:
       - 27017:27017
-    volumes:q
+    volumes:
       - mongodb:/data/db
 volumes:
  mongodb:
