@@ -1,0 +1,10 @@
+:root {
+	--text: #101010;
+	--light_text: #707070;
+	--dark_accent: hsl(calc(210deg + var(--hue)), 100%, 20%);
+	--accent: hsl(calc(210deg + var(--hue)), 100%, 30%);
+	--light_accent: hsl(calc(210deg + var(--hue)), 100%, 70%);
+	--dark_background: #F0F0F0;
+	--background: #D0D0D0;
+	--light_background: #B0B0B0;
+}

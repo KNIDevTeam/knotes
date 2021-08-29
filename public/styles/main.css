@@ -1,0 +1,115 @@
+body {
+    font-family: Helvetica, sans-serif;
+    font-family: Roboto, monospace;
+    margin: 0px 0 0 0;
+    color: var(--text);
+    background-color: var(--background);
+}
+
+div { margin: 0px 0 0 0; }
+
+p { display: block; }
+
+a {
+    color: var(--accent);
+    text-decoration: none;
+}
+
+nav { overflow: hidden; }
+
+nav a {
+    float: left;
+    padding: 12px 12px;
+}
+
+nav a:hover {
+    background-color: var(--light_background);
+}
+
+li {
+    list-style-type: none;
+}
+
+input, textarea {
+    font-family: Roboto, monospace;
+    color: var(--text);
+    background-color: var(--light_background);
+    border: none;
+    outline: none;
+    min-height: 30px;
+    border-radius: 12px;
+    box-sizing: border-box;
+    padding: 6px 9px;
+}
+
+button {
+    color: var(--text);
+    background-color: var(--accent);
+    font-size: 14px;
+    padding: 8px;
+    border: 0;
+    border-radius: 4px;
+    box-shadow: 0 3px var(--light_background);
+}
+
+button:hover { background-color: var(--dark_accent); }
+
+button:active {
+    box-shadow: 0 0 var(--background);
+    transform: translateY(3px);
+}
+
+button a { color: var(--text); }
+
+.outer { width: 100%; }
+
+.inner {
+    display: block;
+    margin: auto;
+    text-align: center;
+    width: max(640px, 80%);
+    padding: 10px;
+}
+
+.create-note {
+    display: inline-block;
+    box-sizing: border-box;
+    padding: 30px 25px;
+    background-color: var(--light_accent);
+    border-radius: 40px;
+    margin: 40px 0;
+}
+
+#navy_wrap { background-color: var(--dark_background); }
+
+#content_wrap { background-color: var(--background); }
+
+#footer_wrap {
+    position: absolute;
+    bottom: 0;
+	font-size: 0.8em;
+	color: var(--light_text);
+	background-color: var(--dark_background);
+}
+
+#functionality {
+    float: left;
+    width: calc(100%/3);
+}
+
+#functionality img {
+    width: 256px;
+    filter: hue-rotate(var(--hue));
+}
+
+ul li {
+    border: 1px solid #FFFFFF;
+    margin: 10px;
+    padding: 10px 20px;
+    display: flex;
+    align-items: center;
+}
+
+ul li img {
+    width: 64px;
+}

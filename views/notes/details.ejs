@@ -1,28 +1,22 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <%- include("../partials/head.ejs") %>
-
 <body>
-    
-
     <%- include("../partials/nav.ejs") %>
-
-    <div>
-        <form action="/notes/update" method="POST">
-            <label id="name-label" for="title" data-title="<%= name %>">tytuł:</label><b><%= name %></b> <br>
-            <textarea name="content" id="content" cols="30" rows="10"><%= body %></textarea>
-            <input type="text" value="<%=name%>" id="oldUrl" name="oldUrl" hidden>
+    <div class="outer" id="content_wrap">
+        <section class="inner">
+            <form class="create-note" action="/notes/update" method="POST">
+                <label id="name-label" for="title" data-title="<%= name %>">Tytuł: </label><b><%= name %></b> <br>
+                <textarea name="content" id="content" cols="30" rows="10"><%= body %></textarea>
+                <input type="text" value="<%=name%>" id="oldUrl" name="oldUrl" hidden>
+                </form>
             <br>
             <button class="update" id="<%= name %>">Zapisz</button>
-          </form>
-        <br>
-        <button class="delete" id="<%= name %>">Usuń</button>
-        <br>
+            <button class="delete" id="<%= name %>">Usuń</button>
+            <br>
+        </section>
     </div>
-
     <%- include("../partials/footer.ejs") %>
-
     <script>
         const trash = document.querySelector('button.delete');
 
@@ -45,6 +39,5 @@
         //     .catch(err => console.log(err));
         // })
     </script>
-
 </body>
 </html>

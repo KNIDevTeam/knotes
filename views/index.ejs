@@ -1,13 +1,28 @@
 <!DOCTYPE html>
 <html>
-    <%- include('./partials/head') %>
+<%- include('./partials/head') %>
 <body>
-
     <%- include('./partials/nav') %>
-
-    <h1>Witaj na stronie projektu!</h1>
-
+    <div class="outer" id="content_wrap">
+        <section class="inner">
+            <h1>Witaj w Knotes!</h1>
+            <p>
+                Stworzyliśmy to miejsce z myślą o Twojej kreatywności.
+            </p>
+            <div id="functionality">
+                <p>Twórz</p>
+                <img src='../resources/new.svg'>
+            </div>
+            <div id="functionality">
+                <p>Edytuj</p>
+                <img src='../resources/edit.svg'>
+            </div>
+            <div id="functionality">
+                <p>Zapisuj</p>
+                <img src='../resources/save.svg'>
+            </div>
+        </section>
+    </div>
     <%- include('./partials/footer') %>
-
 </body>
 </html>

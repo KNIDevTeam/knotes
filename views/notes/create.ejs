@@ -1,28 +1,25 @@
 <!DOCTYPE html>
 <html lang="en">
-    <%- include('../partials/head.ejs') %>
+<%- include('../partials/head.ejs') %>
 <body>
-
     <%- include('../partials/nav.ejs') %>
-
-    <div class="create-note">
-        <form action="/notes" method="POST">
-            <label for="title">Tytuł:</label>
-            <input type="text" id="title" name="title" required>
-            <br><br>
-            <label for="text">Tekst:</label>
-            <br>
-            <textarea id="text" name="text" required></textarea>
-            <br><br>
-            <button>Stwórz</button>
-        </form>
-        <% if (exists) { %>
-            <h2>Notatka o podanej nazwie już istnieje!</h2>
-        <% } %>
-        <br>
+    <div class="outer" id="content_wrap">
+        <section class="inner">
+            <div class="create-note">
+                <form action="/notes" method="POST">
+                    <input type="text" id="title" name="title" placeholder="Tytuł" required>
+                    <br><br>
+                    <textarea name="text" required></textarea>
+                    <br><br>
+                    <button>Stwórz</button>
+                </form>
+                <% if (exists) { %>
+                    <h2>Notatka o podanej nazwie już istnieje!</h2>
+                <% } %>
+                <br>
+            </div>
+        </section>
     </div>
-    
     <%- include('../partials/footer.ejs') %>
-
 </body>
 </html>

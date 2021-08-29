@@ -1,28 +1,25 @@
 <!DOCTYPE html>
 <html lang="en">
-    <%- include('../partials/head.ejs') %>
+<%- include('../partials/head.ejs') %>
 <body>
-
     <%- include('../partials/nav.ejs') %>
-
-    <div>
-
-        <h1>Notatki</h1>
-
-        <% if(notes.length > 0) { %>
-            <% notes.forEach(note => { %>
-                <a href="/notes/<%= note %>"><%= note %></a>
-                <br>
-            <% }) %>
-        <% } else { %>
-            <p>Nie ma notatek!</p>
-        <% } %>
-
-        <br>
-        
+    <div class="outer" id="content_wrap">
+        <section class="inner">
+            <h1>Notatki</h1>
+            <% if(notes.length > 0) { %>
+                <ul>
+                    <% notes.forEach(note => { %>
+                        <li>
+                            <img src="../resources/new.svg">
+                            <a href="/notes/<%= note %>"><%= note %></a>
+                        </li><br>
+                    <% }) %>
+                </ul>
+            <% } else { %>
+                <p>Nie ma notatek!</p>
+            <% } %>
+        </section>
     </div>
-
     <%- include('../partials/footer.ejs') %>
-
 </body>
 </html>
