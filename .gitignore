@@ -118,8 +118,5 @@ dist
 .yarn/install-state.gz
 .pnp.*
 
-# Ignore generated notes
-notes/
-
-#own
+# secrets
 config.json
