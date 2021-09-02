@@ -24,7 +24,7 @@
         myButtonUpdate.addEventListener('click', async () => {
             const filename = document.getElementById('name-label').dataset.title
             const content = document.getElementById('content').innerText
-            await fetch('update', {
+            await fetch(`update`, {
                 method: 'PUT',
                 headers: {'Content-Type': 'application/json'},
                 body: JSON.stringify({ 'filename': filename, 'content': content })
@@ -35,7 +35,7 @@
         });
 
         myButtonDelete.addEventListener('click', () => {
-            fetch('${myButtonDelete.id}', { method: 'DELETE' })
+            fetch(`${myButtonDelete.id}`, { method: 'DELETE' })
             .then(res => res.json())
             .then(data => window.location.href = data.redirect)
             .catch(err => console.log(err));
