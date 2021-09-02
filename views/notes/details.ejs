@@ -18,26 +18,28 @@
     </div>
     <%- include("../partials/footer.ejs") %>
     <script>
-        const trash = document.querySelector('button.delete');
+        const myButtonUpdate = document.querySelector('button.update');
+        const myButtonDelete = document.querySelector('button.delete');
 
-        trash.addEventListener('click', () => {
-            fetch(`${trash.id}`, { method: 'DELETE' })
+        myButtonUpdate.addEventListener('click', async () => {
+            const filename = document.getElementById('name-label').dataset.title
+            const content = document.getElementById('content').innerText
+            await fetch('update', {
+                method: 'PUT',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({ 'filename': filename, 'content': content })
+            })
             .then(res => res.json())
             .then(data => window.location.href = data.redirect)
             .catch(err => console.log(err));
         });
 
-        // const update = document.querySelector('button.update');
-
-        // update.addEventListener('click', () => {
-        //     const textarea = document.getElementById('content')
-        //     const content = textarea.innerText
-        //     const filename = document.getElementById('name-label').dataset.title
-        //     fetch(`update`, { method: 'POST', body: JSON.stringify({ filename, content }) })
-        //     .then(res => res.json())
-        //     .then(data => window.location.href = data.redirect)
-        //     .catch(err => console.log(err));
-        // })
+        myButtonDelete.addEventListener('click', () => {
+            fetch('${myButtonDelete.id}', { method: 'DELETE' })
+            .then(res => res.json())
+            .then(data => window.location.href = data.redirect)
+            .catch(err => console.log(err));
+        });
     </script>
 </body>
 </html>
