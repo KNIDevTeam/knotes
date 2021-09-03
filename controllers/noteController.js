@@ -1,56 +1,92 @@
 const fs = require('fs');
 const { url } = require('inspector');
 const Note = require('../models/note');
+const User = require('../models/user');
 
 const PATH_PREFIX = './public/notes/'
 const PATH_SUFFIX = '.txt'
 
 const note_get = (req, res) => {
-    Note.find({}, (error, result) => {
-        if (error) {
-            console.log(error);
-        }
-        else
-        {
-            console.log(result);
-            var filenames = []
-            for (var i = 0; i < result.length; i++) {
-                filenames.push(result[i].url.replace(PATH_PREFIX,'').replace(PATH_SUFFIX,''))
+    if(req.session.user === undefined){res.render('login.ejs',{message:'Log in before you access the notes'});}
+    else{
+        
+        reads=req.session.readperm.split(':');
+        reads.pop;
+        
+        var prom = new Promise((resolve, reject) => {
+            var almost_notes = []
+            for (const note of reads){
+                Note.findById(note, (error, result) => {
+                    if (error) {
+                        console.log(error);
+                        res.redirect('/404');
+                    }
+                    else
+                    {
+                        console.log(result);
+                        result.id=note;
+                        almost_notes.push({"id":note,"title": result.title});
+                    }
+                }); 
+                
             }
-            res.render('notes/index', { title: 'Wszystkie notatki', notes: filenames });
-        }
-    });
+            //to powinno się wykonywać po zakończonej pętli ale tego nie robi bo async
+            resolve(almost_notes);
+        });
+        
+        prom.then(function(val)  {
+            console.log(val)
+            res.render('notes/index', { title: 'Wszystkie notatki', notes: val });
+        } );
+
+        
+        
+    }
+    
 };
 
+
+
+
 const note_details = (req, res) => {
-    const note_url = req.params.filename;
-    Note.findOne({url: PATH_PREFIX + note_url + ".txt"}, (error, result) => {
+    if(req.session.user === undefined){res.render('login.ejs',{message:'Log in before you access the notes'});}
+    const note_id = req.params.filename;
+    Note.findById(note_id, (error, result) => {
         if (error) {
             console.log(error);
             res.redirect('/404');
         }
         else
         {
-            res.render('notes/details', { name: note_url, body: result.content, title: 'Notatka'});
+            res.render('notes/details', { name: result.title, body: result.content, title: result.title});
             console.log(result)
         }
     });
 };
 
 const note_create_get = (req, res) => {
+    if(req.session.user === undefined){res.render('login.ejs',{message:'Log in before you access the notes'});}
     res.render('notes/create', { title: 'Stwórz notatkę', exists: false });
 };
 
 const note_create_post = (req, res) => {
+    if(req.session.user === undefined){res.render('login.ejs',{message:'Log in before you access the notes'});}
     const path = PATH_PREFIX + req.body.title + PATH_SUFFIX;
     if (!fs.existsSync(path)) {
         const note = new Note({
-            url: path,
+            title: path,
             content: req.body.text
         })
+        console.log(note);
+        console.log(note._id);
         note.save()
         .then(() => console.log("success"))
         .catch((error) => console.log(error));
+        //update usera
+        req.session.readperm=req.session.readperm+note._id+":";
+        req.session.writeperm=req.session.writeperm+note._id+":";
+        User.updateOne({"login":req.session.login},{"readperm":req.session.readperm, "writeperm":req.session.writeperm});
+        console.log(req.session);
         res.redirect('/notes');
     } else {
         res.render('notes/create', { title: 'Stwórz notatkę', exists: true });
