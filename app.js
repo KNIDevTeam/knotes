@@ -1,5 +1,4 @@
 const express = require('express');
-const fs = require('fs');
 const mongoose = require('mongoose');
 const morgan = require('morgan');
 const session = require('express-session');
@@ -11,7 +10,6 @@ app.use('/static', express.static('./public'));
 // connect to database
 app.use((req, res, next) => {
     const dbURI = process.env.KNOTES_MONGO_URL
-    //connect to db
     mongoose.connect(dbURI, { useNewUrlParser: true, useUnifiedTopology: true })
         .then((result) => { console.log("Connection established"); next(); })
         .catch((err) => console.log(err));
