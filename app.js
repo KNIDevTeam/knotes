@@ -35,7 +35,7 @@ app.use( (req,res,next)=>{
 app.use((req,res,next)=>{
     //console.log(`mongodb+srv://${user}:${password}@knotes.xks1n.mongodb.net/knotes?retryWrites=true&w=majority`);
     const {user, password}=req.credential
-    console.log(req.credential)
+    //console.log(req.credential)
     const dbURI = `mongodb+srv://${user}:${password}@knotes.xks1n.mongodb.net/knotes?retryWrites=true&w=majority`;
         //connect to db
         mongoose.connect(dbURI, {useNewUrlParser: true, useUnifiedTopology: true})
@@ -45,7 +45,7 @@ app.use((req,res,next)=>{
 
 app.use(
     (req,res,next)=>{
-        console.log(req.credential)
+        //console.log(req.credential)
         session({
         store: new FileStore(fileStoreOptions),
         secret: req.credential.secret_key,
@@ -78,7 +78,8 @@ app.use(morgan('dev'));
 app.get('/', (req, res,next) => {
     console.log(req.session);//tu sesja jest undefined
     res.render('index', { title: "Strona główna" });
-    //req.session.user='x'; to nie działa jak na razie
+    //req.session.user='x'; //to nie działa jak na razie
+    //console.log(res.session);
 });
 
 //Use note routes
