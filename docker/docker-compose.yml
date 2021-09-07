@@ -9,6 +9,7 @@ services:
       - 8080:8080
     environment:
       - KNOTES_MONGO_URL=mongodb://mongo:27017/knotes?retryWrites=true&w=majority
+      - KNOTES_SECRET=secret
   mongo:
     image: mongo
     ports:

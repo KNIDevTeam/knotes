@@ -8,19 +8,6 @@ const FileStore = require('session-file-store')(session);
 const app = express();
 app.use('/static', express.static('./public'));
 
-// read config.json
-app.use((req, res, next) => {
-    fs.readFile('./config.json', 'utf8', (err, data) => {
-        if (err) {
-            console.log(`error while reading data from config: ${err}`);
-            return;
-        }
-        const creds = JSON.parse(data);
-        req.credential = { user: creds.user, password: creds.password, secret_key: creds.secret_key };
-        next();
-    });
-})
-
 // connect to database
 app.use((req, res, next) => {
     const dbURI = process.env.KNOTES_MONGO_URL
