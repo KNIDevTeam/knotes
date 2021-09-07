@@ -1,63 +1,82 @@
-const json = require('body-parser/lib/types/json');
 const fs = require('fs');
 const Note = require('../models/note');
+const User = require('../models/user');
+
+const PATH_PREFIX = './public/notes/'
+const PATH_SUFFIX = '.txt'
 
 const note_get = (req, res) => {
-    Note.find({},(err,result)=>{
-        if(err){
-            console.log(err);
-        }
-        else
-        {
-            console.log(result);
-        }
-    });
-    const filenames = fs.readdirSync('./public/notes').map(filename => {
-        return filename.substr(0, filename.length - 4)
-    });
-    res.render('notes/index', { title: 'Wszystkie notatki', notes: filenames });
+    if (req.session.user === undefined) {
+        res.render('user/login', { title: 'Log in', message: 'Log in before you access the notes' });
+    }
+    else {
+        var reads = req.session.readperm.split(':');
+        if (reads.length > 0 && reads[0] == '') 
+            reads.pop();
+
+        var prom = new Promise(async(resolve, reject) => {
+            var almost_notes = []
+            for (const note of reads) {
+                console.log(note);
+                await Note.findById(note, (error, result) => {
+                    if (error) {
+                        console.log(error);
+                    }
+                    else {
+                        console.log(result);
+                        result.id = note;
+                        almost_notes.push({ "id": note, "title": result.title.replace(PATH_PREFIX,'') });
+                    }
+                }).exec();
+            }
+            resolve(almost_notes)
+        }).then(val => {
+            console.log(val)
+            res.render('notes/index', { title: 'Wszystkie notatki', notes: val });
+        });
+    }
 };
 
 const note_details = (req, res) => {
-    const note_url = req.params.filename;
-    Note.find({url: note_url},(error,result)=>{
-        if(error){
+    if (req.session.user === undefined) {
+        res.render('user/login', { message: 'Log in before you access the notes' });
+    }
+    const note_id = req.params.filename;
+    Note.findById(note_id, (error, result) => {
+        if (error) {
             console.log(error);
             res.redirect('/404');
         }
-        else
-        {
-            data = result.content
-            res.render('notes/details', { name: note_url, body: data, title: 'Notatka'});
+        else {
+            res.render('notes/details', { name: result.title, body: result.content, title: result.title });
+            console.log(result)
         }
     });
-    // try {
-
-    //     const data = fs.readFileSync('./public/notes/' + req.params.filename + '.txt');
-    //     res.render('notes/details', { name: req.params.filename, body: data, title: 'Notatka'});
-    // } catch (err) {
-    //     console.log(err);
-    //     res.redirect('/404');
-    // }
 };
 
 const note_create_get = (req, res) => {
+    if (req.session.user === undefined) { res.render('user/login', { message: 'Log in before you access the notes' }); }
     res.render('notes/create', { title: 'Stwórz notatkę', exists: false });
 };
 
 const note_create_post = (req, res) => {
-    const path = './public/notes/' + req.body.title + '.txt';
-    if(!fs.existsSync(path)) {
+    if (req.session.user === undefined) { res.render('user/login', { message: 'Log in before you access the notes' }); }
+    const path = PATH_PREFIX + req.body.title + PATH_SUFFIX;
+    if (!fs.existsSync(path)) {
         const note = new Note({
-            url:path,
-            content:req.body.text
+            title: path,
+            content: req.body.text
         })
+        console.log(note);
+        console.log(note._id);
         note.save()
-        .then((result) => console.log("success"))
-        .catch((err)=>console.log(err));
-        //
-        //fs.writeFileSync(path, req.body.text);
-        // jak db dziala to do wywalenia
+            .then(() => console.log("success"))
+            .catch((error) => console.log(error));
+        //update usera
+        req.session.readperm = req.session.readperm + note._id + ":";
+        req.session.writeperm = req.session.writeperm + note._id + ":";
+        User.updateOne({ "login": req.session.login }, { "readperm": req.session.readperm, "writeperm": req.session.writeperm });
+        console.log(req.session);
         res.redirect('/notes');
     } else {
         res.render('notes/create', { title: 'Stwórz notatkę', exists: true });
@@ -65,30 +84,34 @@ const note_create_post = (req, res) => {
 };
 
 const note_delete = (req, res) => {
-    Note.deleteOne({url: './public/notes/' + req.params.filename + '.txt'},function(err,result) {
-        if (err) return console.log(err);
-       console.log("deleted one record");
+    Note.deleteOne({ url: PATH_PREFIX + req.params.filename + PATH_SUFFIX }, function (error, result) {
+        if (error) {
+            return console.log(error);
+        } else {
+            console.log("deleted one record");
+            res.json({ redirect: '/notes' });
+        }
     })
-    //jak db działa to do wywalenia
-    fs.rmSync('./public/notes/' + req.params.filename + '.txt');
-    //
-    res.json({ redirect: '/notes' });
 };
 
 const note_update = (req, res) => {
-    console.log(req.body)
-    const path = './public/notes/' + req.body.oldUrl + '.txt';
-
-    fs.writeFileSync(path, req.body.content)
-    res.redirect('/notes')
-}
-
-
+    Note.findOneAndUpdate({ url: PATH_PREFIX + req.body.title + PATH_SUFFIX },
+        // {url: PATH_PREFIX + req.params.filename + PATH_SUFFIX, content: req.params.content })
+        function (error, result) {
+            if (error) {
+                console.log(error);
+            } else {
+                console.log(req)
+                result = { url: req.body.filename, content: req.body.content }
+            }
+            res.redirect('/notes')
+        })
+};
 
 module.exports = {
-    note_get, 
-    note_details, 
-    note_create_get, 
+    note_get,
+    note_details,
+    note_create_get,
     note_create_post,
     note_delete,
     note_update

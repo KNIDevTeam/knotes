@@ -13,12 +13,12 @@ const userSchema = new Schema({
     readperm: {
         type: String
     },
-    writeperm:{
+    writeperm: {
         type: String
     },
-    
-}, {timestamps: true})
 
-const User  = mongoose.model('users', userSchema);
+}, { timestamps: true })
+
+const User = mongoose.model('users', userSchema);
 
 module.exports = User;

@@ -121,5 +121,12 @@ dist
 # Ignore generated notes
 notes/
 
-#own
+# Dependency directories
+package-lock.json
+
+# IDE project directory
+.vscode/
+
+# Project specific
 config.json
+sessions/*
