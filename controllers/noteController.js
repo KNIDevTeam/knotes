@@ -10,30 +10,27 @@ const note_get = (req, res) => {
         res.render('user/login', { title: 'Log in', message: 'Log in before you access the notes' });
     }
     else {
-        reads = req.session.readperm.split(':');
-        reads.pop;
+        var reads = req.session.readperm.split(':');
+        if (reads.length > 0 && reads[0] == '') 
+            reads.pop();
 
-        var prom = new Promise((resolve, reject) => {
+        var prom = new Promise(async(resolve, reject) => {
             var almost_notes = []
             for (const note of reads) {
-                Note.findById(note, (error, result) => {
+                console.log(note);
+                await Note.findById(note, (error, result) => {
                     if (error) {
                         console.log(error);
-                        res.redirect('/404');
                     }
                     else {
                         console.log(result);
                         result.id = note;
-                        almost_notes.push({ "id": note, "title": result.title });
+                        almost_notes.push({ "id": note, "title": result.title.replace(PATH_PREFIX,'') });
                     }
-                });
-
+                }).exec();
             }
-            // this should execute after loop, but it doesn't because of issues with async
-            resolve(almost_notes);
-        });
-
-        prom.then(function (val) {
+            resolve(almost_notes)
+        }).then(val => {
             console.log(val)
             res.render('notes/index', { title: 'Wszystkie notatki', notes: val });
         });
@@ -41,7 +38,9 @@ const note_get = (req, res) => {
 };
 
 const note_details = (req, res) => {
-    if (req.session.user === undefined) { res.render('login.ejs', { message: 'Log in before you access the notes' }); }
+    if (req.session.user === undefined) {
+        res.render('user/login', { message: 'Log in before you access the notes' });
+    }
     const note_id = req.params.filename;
     Note.findById(note_id, (error, result) => {
         if (error) {
@@ -56,12 +55,12 @@ const note_details = (req, res) => {
 };
 
 const note_create_get = (req, res) => {
-    if (req.session.user === undefined) { res.render('login.ejs', { message: 'Log in before you access the notes' }); }
+    if (req.session.user === undefined) { res.render('user/login', { message: 'Log in before you access the notes' }); }
     res.render('notes/create', { title: 'Stwórz notatkę', exists: false });
 };
 
 const note_create_post = (req, res) => {
-    if (req.session.user === undefined) { res.render('login.ejs', { message: 'Log in before you access the notes' }); }
+    if (req.session.user === undefined) { res.render('user/login', { message: 'Log in before you access the notes' }); }
     const path = PATH_PREFIX + req.body.title + PATH_SUFFIX;
     if (!fs.existsSync(path)) {
         const note = new Note({
