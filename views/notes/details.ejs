@@ -1,22 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
-<%- include("../partials/head.ejs") %>
-<body>
-    <%- include("../partials/nav.ejs") %>
-    <div class="outer" id="content_wrap">
-        <section class="inner">
-            <form class="create-note" action="/notes/update" method="POST">
-                <label id="name-label" for="title" data-title="<%= name %>">Tytuł: </label><b><%= name %></b> <br>
-                <textarea name="content" id="content" cols="30" rows="10"><%= body %></textarea>
-                <input type="text" value="<%=name%>" id="oldUrl" name="oldUrl" hidden>
-                </form>
-            <br>
-            <button class="update" id="<%= name %>">Zapisz</button>
-            <button class="delete" id="<%= name %>">Usuń</button>
-            <br>
-        </section>
-    </div>
-    <%- include("../partials/footer.ejs") %>
+
+<head>
+    <%- include("../partials/head.ejs") %>
     <script>
         const myButtonUpdate = document.querySelector('button.update');
         const myButtonDelete = document.querySelector('button.delete');
@@ -26,20 +12,41 @@
             const content = document.getElementById('content').innerText
             await fetch(`update`, {
                 method: 'PUT',
-                headers: {'Content-Type': 'application/json'},
+                headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ 'filename': filename, 'content': content })
             })
-            .then(res => res.json())
-            .then(data => window.location.href = data.redirect)
-            .catch(err => console.log(err));
+                .then(res => res.json())
+                .then(data => window.location.href = data.redirect)
+                .catch(err => console.log(err));
         });
 
         myButtonDelete.addEventListener('click', () => {
             fetch(`${myButtonDelete.id}`, { method: 'DELETE' })
-            .then(res => res.json())
-            .then(data => window.location.href = data.redirect)
-            .catch(err => console.log(err));
+                .then(res => res.json())
+                .then(data => window.location.href = data.redirect)
+                .catch(err => console.log(err));
         });
     </script>
+</head>
+
+<body>
+    <%- include("../partials/nav.ejs") %>
+    <div class="outer" id="content_wrap">
+        <section class="inner">
+            <form class="create-note" action="/notes/update" method="POST">
+                <label id="name-label" for="title" data-title="<%= name %>">Tytuł: </label><b>
+                    <%= name %>
+                </b> <br>
+                <textarea name="content" id="content" cols="30" rows="10"><%= body %></textarea>
+                <input type="text" value="<%=name%>" id="oldUrl" name="oldUrl" hidden>
+            </form>
+            <br>
+            <button class="update" id="<%= name %>">Zapisz</button>
+            <button class="delete" id="<%= name %>">Usuń</button>
+            <br>
+        </section>
+    </div>
+    <%- include("../partials/footer.ejs") %>
 </body>
+
 </html>
