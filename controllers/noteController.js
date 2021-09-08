@@ -10,10 +10,13 @@ const note_get = (req, res) => {
         res.render('user/login', { title: 'Log in', message: 'Log in before you access the notes' });
     }
     else {
+        console.log(req.session);
         var reads = req.session.readperm.split(':');
-        if (reads.length > 0 && reads[0] == '') 
+        if (reads.length ==0){res.render('notes/index', { title: 'Wszystkie notatki', notes: [] });}
+        else if (reads.length > 0 && reads[0] == ''){res.render('notes/index', { title: 'Wszystkie notatki', notes: [] });}
+        else{
             reads.pop();
-
+        console.log(reads);
         var prom = new Promise(async(resolve, reject) => {
             var almost_notes = []
             for (const note of reads) {
@@ -34,6 +37,8 @@ const note_get = (req, res) => {
             console.log(val)
             res.render('notes/index', { title: 'Wszystkie notatki', notes: val });
         });
+        }
+        
     }
 };
 
@@ -68,16 +73,26 @@ const note_create_post = (req, res) => {
             content: req.body.text
         })
         console.log(note);
-        console.log(note._id);
         note.save()
             .then(() => console.log("success"))
             .catch((error) => console.log(error));
-        //update usera
+        //update user
         req.session.readperm = req.session.readperm + note._id + ":";
         req.session.writeperm = req.session.writeperm + note._id + ":";
-        User.updateOne({ "login": req.session.login }, { "readperm": req.session.readperm, "writeperm": req.session.writeperm });
-        console.log(req.session);
-        res.redirect('/notes');
+        console.log("Updated read : ", req.session.readperm);
+        console.log("Updated write : ", req.session.writeperm); 
+        User.updateOne({ "login": req.session.user }, { "readperm": req.session.readperm, "writeperm": req.session.writeperm },
+        function (err, result) {
+            if (err){
+                console.log(err)
+                res.redirect('/');// z jakiegos powodu odswiezona sesja nie jest przekazywana dalej(w zwiazku z tym )
+            }
+            else{
+                console.log(req.session.readperm)
+                console.log("Updated User : ", result);
+                res.redirect('/');// z jakiegos powodu odswiezona sesja nie jest przekazywana dalej
+            }});
+        
     } else {
         res.render('notes/create', { title: 'Stwórz notatkę', exists: true });
     }
