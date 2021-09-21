@@ -26,8 +26,9 @@ app.use(
         })(req, res, next)
 })
 
-const noteRoutes = require('./routes/noteRoutes');
-const userRoutes = require('./routes/userRoutes');
+// use note routes
+app.use('/notes', require('./routes/noteRoutes'));
+app.use('/user', require('./routes/userRoutes'));
 
 app.set('view engine', 'ejs');
 app.use(express.urlencoded({ extended: true }));
