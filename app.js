@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 const morgan = require('morgan');
 const session = require('express-session');
 const FileStore = require('session-file-store')(session);
+require('dotenv').config();
 
 const app = express();
 app.use('/static', express.static('./public'));
@@ -31,10 +32,6 @@ const userRoutes = require('./routes/userRoutes');
 app.set('view engine', 'ejs');
 app.use(express.urlencoded({ extended: true }));
 app.use(morgan('dev'));
-
-// use note routes
-app.use('/notes', noteRoutes);
-app.use('/user', userRoutes);
 
 // render index page
 app.get('/', (req, res, next) => {
