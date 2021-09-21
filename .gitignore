@@ -1,5 +1,11 @@
 # Dependency directories
 node_modules/
+
+# dotenv environment variables file
+.env
+.env.test
+
+# Dependency directories
 package-lock.json
 
 # IDE project directory
