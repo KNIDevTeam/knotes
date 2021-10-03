@@ -24,6 +24,9 @@
   "devDependencies": {
     "nodemon": "^2.0.12"
   },
+  "nodemonConfig": {
+    "ignore": ["sessions/*"]
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/KNIDevTeam/knotes.git"

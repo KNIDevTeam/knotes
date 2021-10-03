@@ -4,28 +4,29 @@
 <head>
     <%- include("../partials/head.ejs") %>
     <script>
-        const myButtonUpdate = document.querySelector('button.update');
-        const myButtonDelete = document.querySelector('button.delete');
-
-        myButtonUpdate.addEventListener('click', async () => {
+        function note_update() {
             const filename = document.getElementById('name-label').dataset.title
             const content = document.getElementById('content').innerText
-            await fetch(`update`, {
-                method: 'PUT',
+            console.log("update")
+            fetch(`update`, {
+                method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ 'filename': filename, 'content': content })
             })
                 .then(res => res.json())
                 .then(data => window.location.href = data.redirect)
                 .catch(err => console.log(err));
-        });
+        }
 
-        myButtonDelete.addEventListener('click', () => {
-            fetch(`${myButtonDelete.id}`, { method: 'DELETE' })
+        function note_delete() {
+            console.log("delete")
+            var url = window.location.href
+            url = url.substring(url.lastIndexOf('/') + 1)
+            fetch(url, { method: 'DELETE' })
                 .then(res => res.json())
                 .then(data => window.location.href = data.redirect)
                 .catch(err => console.log(err));
-        });
+        }
     </script>
 </head>
 
@@ -33,7 +34,7 @@
     <%- include("../partials/nav.ejs") %>
     <div class="outer" id="content_wrap">
         <section class="inner">
-            <form class="create-note" action="/notes/update" method="POST">
+            <form class="create-note">
                 <label id="name-label" for="title" data-title="<%= name %>">Tytuł: </label><b>
                     <%= name %>
                 </b> <br>
@@ -41,8 +42,8 @@
                 <input type="text" value="<%=name%>" id="oldUrl" name="oldUrl" hidden>
             </form>
             <br>
-            <button class="update" id="<%= name %>">Zapisz</button>
-            <button class="delete" id="<%= name %>">Usuń</button>
+            <button onclick="note_update()">Zapisz</button>
+            <button onclick="note_delete()">Usuń</button>
             <br>
         </section>
     </div>

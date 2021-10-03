@@ -3,10 +3,14 @@ const mongoose = require('mongoose');
 const morgan = require('morgan');
 const session = require('express-session');
 const FileStore = require('session-file-store')(session);
+const bodyParser = require('body-parser')
 require('dotenv').config();
 
 const app = express();
 app.use('/static', express.static('./public'));
+
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
 
 // connect to database
 app.use((req, res, next) => {
