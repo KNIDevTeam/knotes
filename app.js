@@ -41,7 +41,7 @@ app.use(morgan('dev'));
 // render index page
 app.get('/', (req, res, next) => {
     console.log(req.session); // tu sesja jest undefined
-    res.render('index', { title: "Strona główna" });
+    res.render('index', {title: "Strona główna", loged_in: req.session.user !== undefined});
     // req.session.user = 'x'; // to nie działa jak na razie
     // console.log(res.session);
 });
@@ -49,7 +49,13 @@ app.get('/', (req, res, next) => {
 // redirect to 404 page
 app.use((req, res) => {
     res.status(404);
-    res.render('404', { title: "Nie znaleziono!" });
+    res.render('404', {title: "Not found!", loged_in: req.session.user !== undefined});
+});
+
+// redirect to 500 page
+app.use((req, res) => {
+    res.status(500);
+    res.render('500', {title: "Something went wrong!", loged_in: req.session.user !== undefined});
 });
 
 // listen to requests on port 8080

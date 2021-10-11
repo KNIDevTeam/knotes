@@ -4,9 +4,9 @@ const sha256 = require('js-sha256').sha256;
 
 const user_register_get = (req, res) => {
     if (!req.session.user) {
-        res.render('user/register', {title: 'Register', message: 'Create your account'});
+        res.render('user/register', {title: 'Register', loged_in: false, message: 'Create your account'});
     }
-    res.redirect('/');
+    res.redirect('/', {status: 200}, {title: 'Knotes', loged_in: true});
 }
 
 const user_register_post = (req, res) => {
@@ -14,14 +14,14 @@ const user_register_post = (req, res) => {
     let password = req.body.password;
     let password2 = req.body.password_repeated;
     if (login.length === 0) {
-        res.render('user/register', {title: 'Register', message: 'Login field cannot be empty'})
+        res.render('user/register', {title: 'Register', loged_in: false, message: 'Login field cannot be empty'})
     } else if (password.length === 0 || password2.length === 0 || password !== password2) {
-        res.render('user/register', {title: 'Register', message: 'Password fields must be nonempty and must mach'})
+        res.render('user/register', {title: 'Register', loged_in: false, message: 'Password fields must be nonempty and must mach'})
     } else {
         User.findOne({"login": login}, function (err, retusr) {
             if (err) {
                 console.log(err);
-                res.render('user/register', {title: 'Register', message: 'Problem during registeration'});
+                res.render('user/register', {title: 'Register', loged_in: false, message: 'Problem during registeration'});
             }
             console.log(retusr)
             if (retusr === null) {
@@ -35,9 +35,9 @@ const user_register_post = (req, res) => {
                 req.session.user = login;
                 req.session.readperm = "";
                 req.session.writeperm = "";
-                res.redirect('/');
+                res.redirect('/', {status: 200}, {title: 'Knotes', loged_in: true});
             } else {
-                res.render('user/register', {title: 'Register', message: 'Such user already exists'});
+                res.render('user/register', {title: 'Register', loged_in: false, message: 'Such user already exists'});
             }
         });
         // if(User.findOne({login:login})){
@@ -48,9 +48,9 @@ const user_register_post = (req, res) => {
 
 const user_login_get = (req, res) => {
     if (!req.session.user) {
-        res.render('user/login', {title: 'Log In', message: 'Log In'});
+        res.render('user/login', {title: 'Log In', loged_in: false, message: 'Log In'});
     }
-    res.redirect('/');
+    res.redirect('/', {status: 200}, {title: 'Knotes', loged_in: true});
 }
 
 const user_login_post = (req, res) => {
@@ -59,31 +59,28 @@ const user_login_post = (req, res) => {
     User.findOne({"login": login, "password": password}, function (err, retusr) {
         if (err) {
             console.log(err);
-            res.render('user/login', {title: 'Log In', message: 'Problem during login'});
+            res.render('user/login', {title: 'Log In', loged_in: false, message: 'Problem during login'});
         }
         console.log(retusr)
         if (retusr === null) {
             res.render('user/login', {
                 title: 'Log In',
+                loged_in: false,
                 message: 'Entered credentials do not match any in the database'
             });
         } else {
             req.session.user = retusr.login;
             req.session.readperm = retusr.readperm;
             req.session.writeperm = retusr.writeperm;
-            res.redirect('/');
+            res.redirect('/', {status: 200}, {title: 'Knotes', loged_in: true});
         }
 
     });
-    //console.log(login);
-    //console.log(password);
-
-    //res.render('user/login',{message:'Log In'});
 }
 
 const user_logout_get = (req, res) => {
     req.session.destroy();
-    res.redirect('/');
+    res.redirect('/', {status: 200}, {title: 'Knotes', loged_in: true});
 }
 
 module.exports = {
