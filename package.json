@@ -4,10 +4,9 @@
   "description": "Członkowie projektu: - Jan Szachno - Ksawery Chodyniecki - Mieszko Mirgos - Jakub Michalski",
   "main": "index.js",
   "scripts": {
-    "build": "tsc --project ./",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "tsc --project ./; nodemon build/app.js",
-    "start": "tsc --project ./; node build/app.js"
+    "dev": "nodemon -e ts,ejs,json app.ts",
+    "start": "ts-node build/app.js"
 },
   "dependencies": {
     "body-parser": "^1.19.0",

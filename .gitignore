@@ -13,6 +13,5 @@ package-lock.json
 .idea/
 
 # Project specific
-build/
 config.json
 sessions/*
