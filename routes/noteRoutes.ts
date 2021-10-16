@@ -1,8 +1,8 @@
-const express = require('express');
-const bodyParser = require('body-parser')
+import express from 'express';
+import bodyParser from 'body-parser';
 const jsonParser = bodyParser.json();
 
-const noteController = require('../controllers/noteController');
+import noteController from '../controllers/noteController';
 
 const router = express.Router();
 
