@@ -91,25 +91,27 @@ const note_create_post = (req: Request, res: Response) => {
 };
 
 const note_delete = (req: Request, res: Response) => {
-    NoteModel.findByIdAndRemove(req.params.filename, function (error: any, result: Note) {
+    NoteModel.findByIdAndRemove(req.body.id, function (error: any, result: Note) {
         if (error) {
             console.log(error);
             res.redirect('/500');
         } else {
             console.log("deleted one record");
-            res.redirect(302, '/notes');
+            req.session.readperm = req.session.readperm?.replace(req.body.id+":", "")
+            req.session.writeperm = req.session.writeperm?.replace(req.body.id+":", "")
+            req.session.save()
+            res.redirect(302, '/notes'); // this does not work and because of it, app is crashing
         }
     })
 };
 
 const note_update = (req: Request, res: Response) => {
-    NoteModel.findByIdAndUpdate(req.body.title, function (error: any, result: Note) {
+    NoteModel.findByIdAndUpdate(req.body.id, { title: req.body.title, content: req.body.content }, function (error: any, result: Note) {
         if (error) {
             console.log(error);
             res.redirect('/500');
         } else {
-            console.log(req)
-            result = {title: req.body.filename, content: req.body.content}
+            console.log("great success")
             res.redirect(302, '/notes')
         }
     })
