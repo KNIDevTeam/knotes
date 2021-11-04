@@ -84,7 +84,7 @@ const note_create_post = (req: Request, res: Response) => {
             req.session.readperm = readperm
             req.session.writeperm = writeperm
             req.session.save(function(err) {
-                res.redirect(302, '/notes')
+                res.redirect(302, 'notes')
             })
         })
     }
@@ -100,7 +100,7 @@ const note_delete = (req: Request, res: Response) => {
             req.session.readperm = req.session.readperm?.replace(req.body.id+":", "")
             req.session.writeperm = req.session.writeperm?.replace(req.body.id+":", "")
             req.session.save()
-            res.redirect(302, '/notes'); // this does not work and because of it, app is crashing
+            res.redirect('notes'); // this does not work and because of it, app is crashing
         }
     })
 };
@@ -112,7 +112,7 @@ const note_update = (req: Request, res: Response) => {
             res.redirect('/500');
         } else {
             console.log("great success")
-            res.redirect(302, '/notes')
+            res.redirect(302, 'notes')
         }
     })
 };
