@@ -1,8 +1,8 @@
-const express = require('express');
-const bodyParser = require('body-parser')
+import express from 'express';
+import bodyParser from 'body-parser';
 const jsonParser = bodyParser.json();
 
-const noteController = require('../controllers/noteController');
+import noteController from '../controllers/noteController';
 
 const router = express.Router();
 
@@ -10,7 +10,7 @@ router.get('/', noteController.note_get);
 router.post('/', noteController.note_create_post);
 router.get('/create', noteController.note_create_get);
 router.get('/:filename', noteController.note_details);
-router.delete('/:filename', noteController.note_delete);
+router.delete('/delete', noteController.note_delete);
 router.post('/update', noteController.note_update);
 
 module.exports = router;

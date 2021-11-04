@@ -1,10 +1,18 @@
-const express = require('express');
-const mongoose = require('mongoose');
-const morgan = require('morgan');
-const session = require('express-session');
+import express from 'express';
+import mongoose, { ConnectOptions } from 'mongoose';
+import morgan from 'morgan';
+import session from 'express-session';
 const FileStore = require('session-file-store')(session);
-const bodyParser = require('body-parser')
+import bodyParser from 'body-parser';
 require('dotenv').config();
+
+declare module 'express-session' {
+    export interface SessionData {
+        user: string,
+        readperm: string,
+        writeperm: string;
+    }
+}
 
 const app = express();
 app.use('/static', express.static('./public'));
@@ -14,21 +22,30 @@ app.use(bodyParser.json());
 
 // connect to database
 app.use((req, res, next) => {
-    const dbURI = process.env.KNOTES_MONGO_URL
-    mongoose.connect(dbURI, { useNewUrlParser: true, useUnifiedTopology: true })
-        .then((result) => { console.log("Connection established"); next(); })
-        .catch((err) => console.log(err));
+    if (process.env.KNOTES_MONGO_URL !== undefined) {
+        const dbURI: string = process.env.KNOTES_MONGO_URL
+        mongoose.connect(dbURI, { useNewUrlParser: true, useUnifiedTopology: true } as ConnectOptions)
+            .then((result) => { console.log("Connection established"); next(); })
+            .catch((err) => console.log(err));
+    }
+    else
+        throw("URL of Mongo DB was not found in .env file")
 })
 
 app.use(
     (req, res, next) => {
-        session({
-            store: new FileStore({}),
-            secret: process.env.KNOTES_SECRET,
-            resave: false,
-            saveUninitialized: false
-        })(req, res, next)
-})
+        if (process.env.KNOTES_SECRET !== undefined) {
+            session({
+                store: new FileStore({}),
+                secret: process.env.KNOTES_SECRET,
+                resave: false,
+                saveUninitialized: false
+            })(req, res, next)
+        }
+        else
+            throw("Secret of Mongo DB was not found in .env file") 
+    }
+)
 
 // use note routes
 app.use('/notes', require('./routes/noteRoutes'));
