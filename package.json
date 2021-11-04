@@ -5,9 +5,9 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node app.js",
-    "dev": "nodemon app.js"
-  },
+    "dev": "nodemon -e ts,ejs,json app.ts",
+    "start": "ts-node build/app.js"
+},
   "dependencies": {
     "body-parser": "^1.19.0",
     "cookie-parser": "^1.4.5",
@@ -22,10 +22,18 @@
     "supervisor": "^0.12.0"
   },
   "devDependencies": {
-    "nodemon": "^2.0.12"
+    "@types/express": "^4.17.13",
+    "@types/express-session": "^1.17.4",
+    "@types/morgan": "^1.9.3",
+    "@types/node": "^16.11.0",
+    "nodemon": "^2.0.12",
+    "ts-node": "^10.3.0",
+    "typescript": "^4.4.4"
   },
   "nodemonConfig": {
-    "ignore": ["sessions/*"]
+    "ignore": [
+      "sessions/*"
+    ]
   },
   "repository": {
     "type": "git",

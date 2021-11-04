@@ -4,28 +4,27 @@
 <head>
     <%- include("../partials/head.ejs") %>
     <script>
-        function note_update() {
-            const filename = document.getElementById('name-label').dataset.title
-            const content = document.getElementById('content').innerText
-            console.log("update")
+        function note_update_html() {
+            var url = window.location.href
+            url = url.substring(url.lastIndexOf('/') + 1, url.lastIndexOf('?'))
+            const content = document.getElementById('content').value
             fetch(`update`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ 'filename': filename, 'content': content })
+                body: JSON.stringify({ 'id': url, 'content': content })
             })
-                .then(res => res.json())
-                .then(data => window.location.href = data.redirect)
-                .catch(err => console.log(err));
         }
 
-        function note_delete() {
+        function note_delete_html() {
             console.log("delete")
             var url = window.location.href
-            url = url.substring(url.lastIndexOf('/') + 1)
-            fetch(url, { method: 'DELETE' })
-                .then(res => res.json())
-                .then(data => window.location.href = data.redirect)
-                .catch(err => console.log(err));
+            url = url.substring(url.lastIndexOf('/') + 1, url.lastIndexOf('?'))
+            console.log(url)
+            fetch(`delete`, {
+                method: 'DELETE',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ 'id': url })
+            })
         }
     </script>
 </head>
@@ -39,12 +38,10 @@
                     <%= name %>
                 </b> <br>
                 <textarea name="content" id="content" cols="30" rows="10"><%= body %></textarea>
-                <input type="text" value="<%=name%>" id="oldUrl" name="oldUrl" hidden>
+                <br><br>
+                <button onclick="note_update_html()">Zapisz</button>
+                <button onclick="note_delete_html()">Usuń</button>
             </form>
-            <br>
-            <button onclick="note_update()">Zapisz</button>
-            <button onclick="note_delete()">Usuń</button>
-            <br>
         </section>
     </div>
     <%- include("../partials/footer.ejs") %>
